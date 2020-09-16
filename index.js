@@ -1,16 +1,22 @@
 module.exports = {
 
-  set: function (name, value, days) {
+  set: function (name, value, days, samesite) {
 
-    var expires = "";
+    var cookie = name + "=" + value;
 
     if (days) {
       var date = new Date();
       date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = "; expires=" + date.toGMTString();
+      cookie += "; expires=" + date.toGMTString();
     }
 
-    document.cookie = name + "=" + value + expires + "; path=/";
+    if (samesite) {
+      cookie += "; samesite=" + samesite;
+    }
+
+    cookie += '; path=/';
+
+    document.cookie = cookie;
 
   },
 
